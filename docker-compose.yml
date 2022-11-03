@@ -9,6 +9,7 @@ services:
             context: ./
             dockerfile: Dockerfile
         image: laravel-app
+        container_name: laravel
         restart: unless-stopped
         working_dir: /var/www/
         volumes:
@@ -22,6 +23,7 @@ services:
     # nginx
     nginx:
         image: nginx:alpine
+        container_name: nginx
         restart: unless-stopped
         ports:
             - 8180:80
@@ -34,6 +36,7 @@ services:
     # db mysql
     mysql:
         image: mysql:5.7.22
+        container_name: mysql
         restart: unless-stopped
         environment:
             MYSQL_DATABASE: ${DB_DATABASE}
@@ -56,6 +59,7 @@ services:
             context: ./
             dockerfile: Dockerfile
         restart: unless-stopped
+        container_name: queue
         command: "php artisan queue:work"
         volumes:
             - ./:/var/www
@@ -67,6 +71,7 @@ services:
     # redis
     redis:
         image: redis:latest
+        container_name: redis
         networks:
             - laravel-eti
 
